@@ -212,6 +212,7 @@ font-family:'Oswald',sans-serif;
 font-size:28px;
 margin-bottom:18px;
 color:#354B88;
+font-weight:600;
 }
 
 .about-block p{
@@ -351,6 +352,7 @@ font-weight:700;
     font-family:'Oswald',sans-serif;
     font-size:56px;
     color:#354B88;
+    font-weight:600;
 }
 
 .projects-header span{
@@ -624,6 +626,7 @@ animation:float 14s infinite;
     font-size:48px;
     margin-bottom:40px;
     color:#354B88;
+    font-weight:600;
 }
 
 .icon-circle{
