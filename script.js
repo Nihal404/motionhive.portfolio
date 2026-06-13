@@ -70,24 +70,27 @@ const navLinks = document.querySelectorAll('.bottom-nav a');
 const sections = document.querySelectorAll('section');
 
 function updateActiveNav() {
-    let currentSection = '';
+    let currentSection = 'hero';
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
+        const scrollPos = window.scrollY + window.innerHeight / 3;
         
-        if (window.scrollY >= sectionTop - 200) {
+        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
             currentSection = section.getAttribute('id');
         }
     });
     
     navLinks.forEach(link => {
         link.classList.remove('active');
-        if (link.getAttribute('href').slice(1) === currentSection) {
+        const href = link.getAttribute('href').slice(1);
+        if (href === currentSection) {
             link.classList.add('active');
         }
     });
 }
 
 window.addEventListener('scroll', updateActiveNav);
+document.addEventListener('DOMContentLoaded', updateActiveNav);
 updateActiveNav();
