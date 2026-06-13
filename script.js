@@ -71,16 +71,26 @@ const sections = document.querySelectorAll('section');
 
 function updateActiveNav() {
     let currentSection = 'hero';
+    let closestSection = null;
+    let closestDistance = Infinity;
+    
+    const viewportMiddle = window.scrollY + window.innerHeight / 2;
     
     sections.forEach(section => {
         const sectionTop = section.offsetTop;
         const sectionHeight = section.clientHeight;
-        const scrollPos = window.scrollY + window.innerHeight / 3;
+        const sectionMiddle = sectionTop + sectionHeight / 2;
+        const distance = Math.abs(viewportMiddle - sectionMiddle);
         
-        if (scrollPos >= sectionTop && scrollPos < sectionTop + sectionHeight) {
-            currentSection = section.getAttribute('id');
+        if (distance < closestDistance) {
+            closestDistance = distance;
+            closestSection = section.getAttribute('id');
         }
     });
+    
+    if (closestSection) {
+        currentSection = closestSection;
+    }
     
     navLinks.forEach(link => {
         link.classList.remove('active');
