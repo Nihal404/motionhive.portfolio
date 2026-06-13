@@ -254,6 +254,7 @@ letter-spacing:3px;
 border-left:2px solid #D3B6CD;
 padding-left:10px;
 margin-bottom:15px;
+font-weight:bold;
 }
 
 .highlight{
@@ -273,9 +274,10 @@ max-width:270px;
 
 .languages h4{
 color:#354B88;
-font-size:11px;
+font-size:16px;
 letter-spacing:3px;
 margin-bottom:20px;
+font-weight:bold;
 }
 
 .lang-row{
