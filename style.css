@@ -332,8 +332,12 @@ font-weight:700;
 .projects-header h2{
     font-family:'Oswald',sans-serif;
     font-size:56px;
-color:#354B88;
-color:#5C5857;
+    color:#354B88;
+}
+
+.projects-header span{
+    color:#5C5857;
+    font-size:12px;
     letter-spacing:2px;
 }
 
@@ -420,7 +424,10 @@ border: 2px solid #D3B6CD;
 .text-card span{
     font-family:'Oswald',sans-serif;
     font-size:32px;
-color:#354B88;
+    color:#354B88;
+}
+
+/* ========================= */
 /* CONTACT */
 /* ========================= */
 
@@ -576,8 +583,19 @@ animation:float 14s infinite;
 .profile-info h3{
     font-family:'Oswald',sans-serif;
     font-size:32px;
-color:#354B88;
-color:#5C5857;
+    color:#354B88;
+}
+
+.profile-info p{
+    color:#5C5857;
+}
+
+.contact-item{
+    display:flex;
+    align-items:center;
+    gap:20px;
+    margin-bottom:25px;
+}
 
 .contact-box{
     margin-top:70px;
@@ -587,10 +605,7 @@ color:#5C5857;
     font-family:'Oswald',sans-serif;
     font-size:48px;
     margin-bottom:40px;
-color:#354B88;
-    align-items:center;
-    gap:20px;
-    margin-bottom:25px;
+    color:#354B88;
 }
 
 .icon-circle{
@@ -623,7 +638,8 @@ color:#5C5857;
     line-height:.85;
     text-align:right;
 color:#354B88;
-background:#D3B6CD;
+}
+
 .film-strip{
     display:flex;
     align-items:flex-end;
