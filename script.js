@@ -63,27 +63,25 @@ const sections = document.querySelectorAll('section');
 
 function updateActiveNav() {
     let currentSection = 'hero';
-    let closestSection = null;
-    let closestDistance = Infinity;
     
-    const viewportMiddle = window.scrollY + window.innerHeight / 2;
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        const sectionMiddle = sectionTop + sectionHeight / 2;
-        const distance = Math.abs(viewportMiddle - sectionMiddle);
-        
-        if (distance < closestDistance) {
-            closestDistance = distance;
-            closestSection = section.getAttribute('id');
-        }
-    });
-    
-    if (closestSection) {
-        currentSection = closestSection;
+    // 1. Check if the user has reached the near-bottom of the page first
+    const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 75;
+
+    if (isAtBottom) {
+        currentSection = 'contact';
+    } else {
+        // 2. Track based on when the top boundary enters the view window
+        sections.forEach(section => {
+            const sectionTop = section.getBoundingClientRect().top;
+            
+            // If the top of the section is higher than 10% of the screen height
+            if (sectionTop <= window.innerHeight * 0.025) {
+                currentSection = section.getAttribute('id');
+            }
+        });
     }
     
+    // 3. Update the UI nav dot classes safely
     navLinks.forEach(link => {
         link.classList.remove('active');
         const href = link.getAttribute('href').slice(1);
@@ -92,6 +90,7 @@ function updateActiveNav() {
         }
     });
 }
+
 
 window.addEventListener('scroll', updateActiveNav);
 document.addEventListener('DOMContentLoaded', updateActiveNav);
