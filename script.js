@@ -1,39 +1,128 @@
+window.addEventListener("load",()=>{
+
+const tl = gsap.timeline();
+
+tl.from(".loader-text",{
+
+    y:300,
+    opacity:0,
+
+    duration:1.3,
+
+    ease:"power4.out"
+
+})
+
+.to(".loader-text",{
+
+    scale:1.2,
+
+    duration:.4
+
+})
+
+.to(".loader-text",{
+
+    scale:6,
+
+    opacity:0,
+
+    duration:1,
+
+    ease:"power4.in"
+
+})
+
+.to("#loader",{
+
+    opacity:0,
+
+    duration:.4,
+
+    onComplete:()=>{
+
+        document.getElementById("loader").remove();
+
+    }
+
+});
+
+});
+
 gsap.registerPlugin(ScrollTrigger);
 
 const light = document.getElementById("cursor-light");
 
-document.addEventListener("mousemove", e => {
+document.addEventListener("mousemove",(e)=>{
 
-light.style.left = e.clientX + "px";
-light.style.top = e.clientY + "px";
+    gsap.to("#cursor-light",{
+
+        x:e.clientX,
+        y:e.clientY,
+
+        duration:.4,
+
+        ease:"power3.out"
+
+    });
 
 });
-
 gsap.from(".hero-image",{
 scale:1,
 opacity:1,
 });
 
-gsap.from(".hero-title",{
-y:150,
-opacity:0,
-duration:1.5,
-delay:.3,
-ease:"power4.out"
+gsap.from(".hero-image",{
+
+    scale:.3,
+    rotate:30,
+
+    opacity:0,
+
+    duration:1.5,
+
+    delay:2
+
 });
 
-gsap.utils.toArray([".about-section", ".projects-section", ".thankyou-section"]).forEach(section => {
-   gsap.from(section, {
-      y: 100,
-      opacity: 0,
-      scrollTrigger: {
-         trigger: section,
-         start: "top 80%",
-         toggleActions: "play none none reverse"
-      }
-   });
+gsap.from(".hero-title span",{
+
+    y:200,
+
+    opacity:0,
+
+    duration:1.2,
+
+    stagger:0.08,
+
+    delay:2.2,
+
+    ease:"power4.out"
+
 });
 
+gsap.utils.toArray("section").forEach(sec=>{
+
+    gsap.from(sec,{
+
+        y:120,
+        opacity:0,
+        scale:0.95,
+
+        duration:1.4,
+
+        ease:"power4.out",
+
+        scrollTrigger:{
+            trigger:sec,
+            start:"top 80%",
+            end:"bottom 20%",
+            toggleActions:"play reverse play reverse"
+        }
+
+    });
+
+});
 gsap.from(".card", {
    scrollTrigger: {
       trigger: "#projects",
@@ -139,4 +228,163 @@ cinemaModal.addEventListener('mouseleave', () => {
     setTimeout(() => {
         cinemaModal.classList.add('hidden');
     }, 400); // Matches the CSS transition time
+});
+document.querySelectorAll("a,.card,.skill-box").forEach(el=>{
+
+    el.addEventListener("mouseenter",()=>{
+
+        gsap.to("#cursor-light",{
+
+            scale:2.5,
+
+            duration:.3
+
+        });
+
+    });
+
+    el.addEventListener("mouseleave",()=>{
+
+        gsap.to("#cursor-light",{
+
+            scale:1,
+
+            duration:.3
+
+        });
+
+    });
+
+});
+document.querySelectorAll(".bottom-nav a").forEach(link=>{
+
+    link.addEventListener("mousemove",(e)=>{
+
+        const rect = link.getBoundingClientRect();
+
+        const x = e.clientX - rect.left - rect.width/2;
+        const y = e.clientY - rect.top - rect.height/2;
+
+        gsap.to(link,{
+
+            x:x*.35,
+            y:y*.35,
+
+            duration:.3
+
+        });
+
+    });
+
+    link.addEventListener("mouseleave",()=>{
+
+        gsap.to(link,{
+
+            x:0,
+            y:0,
+
+            duration:.3
+
+        });
+
+    });
+
+});
+gsap.to(".hero-image",{
+
+    y:-20,
+
+    duration:2,
+
+    repeat:-1,
+
+    yoyo:true,
+
+    ease:"sine.inOut"
+
+});
+const heroImage = document.querySelector(".hero-image");
+
+document.addEventListener("mousemove",(e)=>{
+
+    const x = (e.clientX - window.innerWidth/2) / 40;
+    const y = (e.clientY - window.innerHeight/2) / 40;
+
+    gsap.to(heroImage,{
+
+        rotateY:x,
+
+        rotateX:-y,
+
+        duration:1,
+
+        ease:"power2.out"
+
+    });
+
+});
+
+gsap.to(".blob1",{
+    y:-300,
+    scrollTrigger:{
+        scrub:1
+    }
+});
+
+gsap.to(".blob2",{
+    y:250,
+    scrollTrigger:{
+        scrub:1
+    }
+});
+
+gsap.to(".blob3",{
+    x:250,
+    scrollTrigger:{
+        scrub:1
+    }
+});
+gsap.from(".thank-right h1",{
+
+    scale:4,
+
+    opacity:0,
+
+    duration:2,
+
+    ease:"power4.out",
+
+    scrollTrigger:{
+        trigger:".thank-right",
+        start:"top 70%"
+    }
+
+});
+gsap.to(".film-box",{
+
+    y:-20,
+
+    duration:1,
+
+    repeat:-1,
+
+    yoyo:true,
+
+    stagger:.2,
+
+    ease:"sine.inOut"
+
+});
+gsap.to(".hero-title",{
+
+    scale:1.03,
+
+    duration:2,
+
+    repeat:-1,
+
+    yoyo:true,
+
+    ease:"sine.inOut"
+
 });
