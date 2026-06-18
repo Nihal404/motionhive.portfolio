@@ -1,55 +1,70 @@
+// Register ScrollTrigger early so refresh can be called from timelines
+gsap.registerPlugin(ScrollTrigger);
+
 window.addEventListener("load",()=>{
 
 const tl = gsap.timeline();
 
 tl.from(".loader-text",{
-
     y:300,
     opacity:0,
-
-    duration:1.3,
-
+    duration:1.2,
     ease:"power4.out"
-
 })
 
 .to(".loader-text",{
-
-    scale:1.2,
-
+    scale:1.15,
     duration:.4
-
 })
 
 .to(".loader-text",{
-
-    scale:6,
-
+    scale:window.innerWidth < 768 ? 8 : 12,
     opacity:0,
-
     duration:1,
-
-    ease:"power4.in"
-
+    ease:"power4.inOut"
 })
 
 .to("#loader",{
-
     opacity:0,
+    duration:.5
+})
 
-    duration:.4,
+.add(()=>{
+    const loaderEl = document.getElementById("loader");
+    if(loaderEl) loaderEl.remove();
+    try{ ScrollTrigger.refresh(); }catch(e){/* ignore if not ready */}
 
-    onComplete:()=>{
+})
 
-        document.getElementById("loader").remove();
+.from("#hero",{
+    y:200,
+    opacity:0,
+    duration:1.2,
+    ease:"power4.out"
+})
 
-    }
+.from("#about",{
+    y:200,
+    opacity:0,
+    duration:1,
+    ease:"power4.out"
+},"-=0.7")
+
+.from("#projects",{
+    y:200,
+    opacity:0,
+    duration:1,
+    ease:"power4.out"
+},"-=0.7")
+
+.from("#contact",{
+    y:200,
+    opacity:0,
+    duration:1,
+    ease:"power4.out"
+},"-=0.7");
 
 });
-
-});
-
-gsap.registerPlugin(ScrollTrigger);
 
 const light = document.getElementById("cursor-light");
 
@@ -67,6 +82,8 @@ document.addEventListener("mousemove",(e)=>{
     });
 
 });
+
+
 gsap.from(".hero-image",{
 scale:1,
 opacity:1,
@@ -74,14 +91,14 @@ opacity:1,
 
 gsap.from(".hero-image",{
 
-    scale:.3,
-    rotate:30,
+    scale:.6,
+    rotate:15,
 
     opacity:0,
 
-    duration:1.5,
+    duration:1.2,
 
-    delay:2
+    delay:1.5
 
 });
 
@@ -146,44 +163,91 @@ start:"top 70%"
 
 });
 
-// Active navigation indicator
+// Active navigation indicator (IntersectionObserver-based)
 const navLinks = document.querySelectorAll('.bottom-nav a');
-const sections = document.querySelectorAll('section');
+const sections = document.querySelectorAll('section[id]');
 
-function updateActiveNav() {
-    let currentSection = 'hero';
-    
-    // 1. Check if the user has reached the near-bottom of the page first
-    const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 75;
-
-    if (isAtBottom) {
-        currentSection = 'contact';
-    } else {
-        // 2. Track based on when the top boundary enters the view window
-        sections.forEach(section => {
-            const sectionTop = section.getBoundingClientRect().top;
-            
-            // If the top of the section is higher than 10% of the screen height
-            if (sectionTop <= window.innerHeight * 0.025) {
-                currentSection = section.getAttribute('id');
-            }
-        });
-    }
-    
-    // 3. Update the UI nav dot classes safely
+function setActiveLink(id) {
     navLinks.forEach(link => {
-        link.classList.remove('active');
-        const href = link.getAttribute('href').slice(1);
-        if (href === currentSection) {
-            link.classList.add('active');
-        }
+        link.classList.toggle('active', link.getAttribute('href') === `#${id}`);
     });
 }
 
+if ('IntersectionObserver' in window) {
+    const obsOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: [0, 0.15, 0.25, 0.5, 0.75, 1]
+    };
 
-window.addEventListener('scroll', updateActiveNav);
-document.addEventListener('DOMContentLoaded', updateActiveNav);
-updateActiveNav();
+    const ratios = {};
+    const observer = new IntersectionObserver((entries) => {
+        // Update stored intersection ratios for all observed sections
+        entries.forEach(entry => {
+            const id = entry.target.getAttribute('id');
+            ratios[id] = entry.isIntersecting ? entry.intersectionRatio : 0;
+        });
+
+        // Pick the section with the highest current intersection ratio
+        let bestId = null;
+        let bestRatio = 0;
+        for (const id in ratios) {
+            if (ratios[id] > bestRatio) {
+                bestRatio = ratios[id];
+                bestId = id;
+            }
+        }
+
+        // If nothing is intersecting, fallback to bottom-check or closest-to-center
+        if (!bestId || bestRatio === 0) {
+            const isAtBottom = (window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight - 75;
+            if (isAtBottom) {
+                setActiveLink('contact');
+                return;
+            }
+
+            // Choose section whose center is closest to viewport center
+            let closestId = null;
+            let closestDist = Infinity;
+            sections.forEach(s => {
+                const rect = s.getBoundingClientRect();
+                const center = rect.top + (rect.height / 2);
+                const dist = Math.abs(center - (window.innerHeight / 2));
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    closestId = s.getAttribute('id');
+                }
+            });
+            if (closestId) setActiveLink(closestId);
+        } else {
+            setActiveLink(bestId);
+        }
+    }, obsOptions);
+
+    sections.forEach(s => {
+        ratios[s.getAttribute('id')] = 0;
+        observer.observe(s);
+    });
+
+    // Ensure correct initial state after layout/GSAP settles
+    window.addEventListener('load', () => setTimeout(() => { window.dispatchEvent(new Event('scroll')); }, 120));
+} else {
+    // Fallback: simple scroll-based updater
+    function updateActiveNavFallback() {
+        let current = 'hero';
+        const midpoint = window.innerHeight / 2;
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= midpoint && rect.bottom >= midpoint) {
+                current = section.getAttribute('id');
+            }
+        });
+        setActiveLink(current);
+    }
+    window.addEventListener('scroll', updateActiveNavFallback);
+    document.addEventListener('DOMContentLoaded', updateActiveNavFallback);
+    updateActiveNavFallback();
+}
 // Fixed Widescreen Cinema Mode Implementation
 const projectCards = document.querySelectorAll('.projects-grid .card');
 const cinemaModal = document.getElementById('cinema-modal');
@@ -220,6 +284,44 @@ projectCards.forEach(card => {
     card.addEventListener('mouseleave', () => {
         clearTimeout(cinemaTimer);
     });
+});
+
+// Make cinema open only on devices that support hover (desktop) and allow click-to-close anywhere
+projectCards.forEach(card => {
+    // replace previous handlers with hover that works only on desktop
+    card.addEventListener('mouseenter', (e) => {
+        // only activate on fine pointer devices (desktop)
+        if (!window.matchMedia('(pointer: fine) and (min-width: 900px)').matches) return;
+
+        const cardImg = card.querySelector('img');
+        const cardSrc = cardImg ? cardImg.getAttribute('src') : '';
+        const cardSpan = card.querySelector('span');
+        const textValue = cardSpan ? cardSpan.textContent : 'PROJECT PREVIEW';
+
+        // Show modal immediately on hover
+        if (cardSrc) {
+            cinemaImg.setAttribute('src', cardSrc);
+        } else {
+            cinemaImg.removeAttribute('src');
+        }
+        cinemaText.textContent = textValue;
+        cinemaModal.classList.remove('hidden');
+        // small delay to allow CSS to kick in
+        setTimeout(() => cinemaModal.classList.add('active'), 10);
+        // lock background scroll
+        document.body.style.overflow = 'hidden';
+    });
+});
+
+// Close modal when clicking anywhere (including the modal) — returns cards to original size
+document.addEventListener('click', (e) => {
+    if (!cinemaModal.classList.contains('active')) return;
+    // If click target is inside a project card while modal is active, still close
+    cinemaModal.classList.remove('active');
+    setTimeout(() => {
+        cinemaModal.classList.add('hidden');
+        document.body.style.overflow = '';
+    }, 320);
 });
 
 // Close the cinematic view instantly when the mouse leaves the large overlay
@@ -290,6 +392,8 @@ document.querySelectorAll(".bottom-nav a").forEach(link=>{
     });
 
 });
+if(window.innerWidth > 768){
+
 gsap.to(".hero-image",{
 
     y:-20,
@@ -303,6 +407,10 @@ gsap.to(".hero-image",{
     ease:"sine.inOut"
 
 });
+
+}
+if(window.innerWidth > 768){
+
 const heroImage = document.querySelector(".hero-image");
 
 document.addEventListener("mousemove",(e)=>{
@@ -323,6 +431,8 @@ document.addEventListener("mousemove",(e)=>{
     });
 
 });
+
+}
 
 gsap.to(".blob1",{
     y:-300,
@@ -388,3 +498,4 @@ gsap.to(".hero-title",{
     ease:"sine.inOut"
 
 });
+/* Removed duplicate load-based reveal animations — timeline and ScrollTrigger handle reveals now */
