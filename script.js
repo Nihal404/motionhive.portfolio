@@ -276,6 +276,7 @@ const projectCards = document.querySelectorAll('.projects-grid .card');
 const cinemaModal = document.getElementById('cinema-modal');
 const cinemaImg = document.getElementById('cinema-img');
 const cinemaText = document.getElementById('cinema-text');
+let cinemaIframe = null;
 
 projectCards.forEach(card => {
     let cinemaTimer;
@@ -322,8 +323,29 @@ projectCards.forEach(card => {
         const cardSpan = card.querySelector('span');
         const textValue = cardSpan ? cardSpan.textContent : 'PROJECT PREVIEW';
 
-        if (cardSrc) cinemaImg.setAttribute('src', cardSrc);
-        else cinemaImg.removeAttribute('src');
+        const dataVideo = card.getAttribute('data-video');
+        if (dataVideo) {
+            // show iframe preview for Google Drive
+            if (!cinemaIframe) {
+                cinemaIframe = document.createElement('iframe');
+                cinemaIframe.id = 'cinema-iframe';
+                cinemaIframe.setAttribute('allow', 'autoplay; fullscreen');
+                cinemaIframe.style.border = '0';
+                cinemaIframe.style.width = '100%';
+                cinemaIframe.style.height = '100%';
+            }
+            cinemaIframe.setAttribute('src', dataVideo);
+            // hide image and append iframe
+            cinemaImg.style.display = 'none';
+            const content = document.querySelector('.cinema-content');
+            if (!content.querySelector('#cinema-iframe')) content.appendChild(cinemaIframe);
+        } else {
+            // remove iframe if present
+            if (cinemaIframe && cinemaIframe.parentNode) cinemaIframe.parentNode.removeChild(cinemaIframe);
+            cinemaImg.style.display = '';
+            if (cardSrc) cinemaImg.setAttribute('src', cardSrc);
+            else cinemaImg.removeAttribute('src');
+        }
 
         cinemaText.textContent = textValue;
         cinemaModal.classList.remove('hidden');
