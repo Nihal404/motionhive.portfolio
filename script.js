@@ -248,6 +248,29 @@ if ('IntersectionObserver' in window) {
     document.addEventListener('DOMContentLoaded', updateActiveNavFallback);
     updateActiveNavFallback();
 }
+// Scroll-spy fallback: add 'active-link' class to bottom-nav links based on scroll position
+function scrollSpy() {
+    let current = '';
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.bottom-nav a');
+
+    sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        if (pageYOffset >= (sectionTop - section.clientHeight / 3)) {
+            current = section.getAttribute('id');
+        }
+    });
+
+    navLinks.forEach(link => {
+        link.classList.remove('active-link');
+        const href = link.getAttribute('href') || '';
+        if (href === `#${current}`) link.classList.add('active-link');
+    });
+}
+
+window.addEventListener('scroll', scrollSpy);
+// run once to initialize
+window.addEventListener('load', () => setTimeout(scrollSpy, 200));
 // Fixed Widescreen Cinema Mode Implementation
 const projectCards = document.querySelectorAll('.projects-grid .card');
 const cinemaModal = document.getElementById('cinema-modal');
@@ -258,6 +281,8 @@ projectCards.forEach(card => {
     let cinemaTimer;
 
     card.addEventListener('mouseenter', () => {
+        // Only activate hover-based cinema on desktop-like pointer devices
+        if (!window.matchMedia('(pointer: fine) and (min-width: 900px)').matches) return;
         // Find the image inside the hovered card
         const cardImg = card.querySelector('img');
         const cardSrc = cardImg ? cardImg.getAttribute('src') : '';
@@ -266,7 +291,7 @@ projectCards.forEach(card => {
         const cardSpan = card.querySelector('span');
         const textValue = cardSpan ? cardSpan.textContent : 'PROJECT PREVIEW';
 
-        // Wait 0.5 seconds before opening cinema mode
+        // Wait 1.0 seconds before opening cinema mode (hover-in delay)
         cinemaTimer = setTimeout(() => {
             if (cardSrc) {
                 cinemaImg.setAttribute('src', cardSrc);
@@ -278,40 +303,37 @@ projectCards.forEach(card => {
                     cinemaModal.classList.add('active');
                 }, 10);
             }
-        }, 500); 
+        }, 1000);
     });
 
     card.addEventListener('mouseleave', () => {
         clearTimeout(cinemaTimer);
     });
-});
-
-// Make cinema open only on devices that support hover (desktop) and allow click-to-close anywhere
-projectCards.forEach(card => {
-    // replace previous handlers with hover that works only on desktop
-    card.addEventListener('mouseenter', (e) => {
-        // only activate on fine pointer devices (desktop)
-        if (!window.matchMedia('(pointer: fine) and (min-width: 900px)').matches) return;
+    
+    // Open cinema modal on click (prevent default navigation)
+    card.addEventListener('click', (e) => {
+        // prevent anchor navigation
+        e.preventDefault();
+        // avoid document-level click handler from immediately closing the modal
+        e.stopPropagation();
 
         const cardImg = card.querySelector('img');
         const cardSrc = cardImg ? cardImg.getAttribute('src') : '';
         const cardSpan = card.querySelector('span');
         const textValue = cardSpan ? cardSpan.textContent : 'PROJECT PREVIEW';
 
-        // Show modal immediately on hover
-        if (cardSrc) {
-            cinemaImg.setAttribute('src', cardSrc);
-        } else {
-            cinemaImg.removeAttribute('src');
-        }
+        if (cardSrc) cinemaImg.setAttribute('src', cardSrc);
+        else cinemaImg.removeAttribute('src');
+
         cinemaText.textContent = textValue;
         cinemaModal.classList.remove('hidden');
-        // small delay to allow CSS to kick in
+        // small delay to allow CSS transitions
         setTimeout(() => cinemaModal.classList.add('active'), 10);
-        // lock background scroll
+        // lock background scroll while modal open
         document.body.style.overflow = 'hidden';
     });
 });
+
 
 // Close modal when clicking anywhere (including the modal) — returns cards to original size
 document.addEventListener('click', (e) => {

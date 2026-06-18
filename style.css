@@ -41,10 +41,11 @@ border-radius:50%;
 
 pointer-events:none;
 
-background:radial-gradient(
-circle,
-rgba(169,185,97,.9),
-transparent 70%
+background: radial-gradient(
+    circle,
+    rgba(255,20,147,0.95), /* neon pink center */
+    rgba(255,105,180,0.35) 50%,
+    transparent 75%
 );
 
 transform:translate(-50%,-50%);
@@ -91,7 +92,7 @@ filter:blur(8px);
 
 .bottom-nav a{
     text-decoration:none;
-    color:black;
+    color:white !important;
     transition:.3s;
     font-size:14px;
     font-weight:500;
@@ -103,7 +104,8 @@ filter:blur(8px);
 }
 
 .bottom-nav a.active{
-    color:#A9B961;
+    color:#bc13fe !important; /* neon purple */
+    text-shadow: 0 0 6px #bc13fe, 0 0 12px rgba(188,19,254,0.25);
 }
 
 .bottom-nav a.active::before{
@@ -116,6 +118,12 @@ filter:blur(8px);
     bottom:-15px;
     left:50%;
     transform:translateX(-50%);
+}
+
+/* support alternate active class from scroll-spy */
+.bottom-nav a.active-link{
+    color:#bc13fe !important;
+    text-shadow: 0 0 6px #bc13fe, 0 0 12px rgba(188,19,254,0.25);
 }
 
 #hero{
@@ -136,8 +144,10 @@ filter:blur(8px);
     backdrop-filter: blur(12px);
     border:1px solid rgba(255,255,255,0.1);
     border-radius:25px;
-    margin:20px auto;
-    min-height: auto;
+    /* make the hero cover the full viewport and remove external gaps */
+    margin:0;
+    min-height:100vh;
+    height:100vh;
 }
 .hero-video{
 
@@ -776,7 +786,7 @@ font-weight:700;
     width:100%;
     height:100%;
     object-fit:cover;
-    transition:.5s;
+    transition:.2s;
 }
 
 .card:hover img{
@@ -918,7 +928,6 @@ animation:float 14s infinite;
 50%{
     transform:translateY(-70px);
 }
-
 }
 
 /* ========================= */
@@ -1120,6 +1129,12 @@ color:#5C5857;
     letter-spacing:4px;
 }
 
+/* Make LANGUAGE / COMMUNICATION and THANK YOU use the purple accent */
+.languages h4,
+.thank-right h1 {
+    color: var(--accent-purple) !important;
+}
+
 @media(max-width:700px){
     .thank-right h1{
         font-size: clamp(40px, 12vw, 140px);
@@ -1197,6 +1212,35 @@ border-radius:4px;
         margin-left:0;
         text-align:left;
     }
+section#contact, #contact, .about-section, .projects-section, .thankyou-section {
+    min-height: auto !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+
+/* tighten contact internals */
+section#contact, #contact {
+    gap: 20px !important;
+}
+
+.thank-right {
+    padding-top: 20px !important;
+}
+
+.thank-left {
+    margin-top: 20px !important;
+}
+
+/* reduce footer offset if present */
+footer.portfolio-footer, footer {
+    margin-top: 20px !important;
+}
+
+/* Additional mild tightening for about/projects containers */
+.about-container { gap: 30px !important; }
+.projects-section { padding-top: 40px !important; padding-bottom: 40px !important; }
 
     .contact-box{
         text-align:center;
@@ -1323,6 +1367,18 @@ border-radius:4px;
     object-fit:cover;
 
     z-index:-10;
+}
+
+/* Strong override to ensure background video fills mobile viewport */
+video#bg-video, #bg-video {
+    width: 100vw !important;
+    height: 100vh !important;
+    min-height: 100vh !important;
+    object-fit: cover !important;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    z-index: -10 !important;
 }
 
 #bg-overlay{
@@ -1526,4 +1582,45 @@ border-radius:4px;
         font-size:14px !important;
         padding:8px !important;
     }
+}
+
+/* ======= Mobile Optimization Appendix ======= */
+@media (max-width: 768px) {
+    /* Stack about section vertically and reduce horizontal padding */
+    .about-section, #about {
+        display: flex !important;
+        flex-direction: column !important;
+        padding: 60px 5% !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+
+    /* Force contact and projects grids into single column */
+    section#contact, #contact, .projects-grid {
+        grid-template-columns: 1fr !important;
+        gap: 20px !important;
+        width: 100% !important;
+    }
+
+    /* Make hero adapt to mobile browser chrome changes */
+    #hero {
+        min-height: 100dvh !important; /* modern mobile viewport unit */
+        height: auto !important;
+        padding-top: clamp(20px, 6vw, 60px) !important;
+        padding-bottom: clamp(20px, 6vw, 60px) !important;
+    }
+
+    /* Ensure media is fluid */
+    img, video {
+        max-width: 100% !important;
+        height: auto !important;
+    }
+
+    /* Tighten project rows to avoid overly narrow columns */
+    .projects-grid { grid-auto-rows: auto !important; }
+}
+
+/* Ensure bottom-nav remains centered on narrow viewports */
+@media (max-width: 480px) {
+    .bottom-nav{ left:50%; transform:translateX(-50%); width:94%; }
 }
