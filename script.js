@@ -140,16 +140,6 @@ gsap.utils.toArray("section").forEach(sec=>{
     });
 
 });
-gsap.from(".card", {
-   scrollTrigger: {
-      trigger: "#projects",
-      start: "top 70%"
-   },
-   opacity: 0,
-   y: 100,
-   stagger: 0.2
-});
-
 gsap.to(".fill",{
 
 width:(i,target)=>target.style.width,
@@ -280,10 +270,13 @@ let cinemaIframe = null;
 
 projectCards.forEach(card => {
     let cinemaTimer;
+    const video = card.querySelector('video');
 
     card.addEventListener('mouseenter', () => {
+        if (video) video.play();
         // Only activate hover-based cinema on desktop-like pointer devices
         if (!window.matchMedia('(pointer: fine) and (min-width: 900px)').matches) return;
+        if (video) return;
         // Find the image inside the hovered card
         const cardImg = card.querySelector('img');
         const cardSrc = cardImg ? cardImg.getAttribute('src') : '';
@@ -308,6 +301,10 @@ projectCards.forEach(card => {
     });
 
     card.addEventListener('mouseleave', () => {
+        if (video) {
+            video.pause();
+            video.currentTime = 0;
+        }
         clearTimeout(cinemaTimer);
     });
     
@@ -317,6 +314,7 @@ projectCards.forEach(card => {
         e.preventDefault();
         // avoid document-level click handler from immediately closing the modal
         e.stopPropagation();
+        if (video) return;
 
         const cardImg = card.querySelector('img');
         const cardSrc = cardImg ? cardImg.getAttribute('src') : '';
