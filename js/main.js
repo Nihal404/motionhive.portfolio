@@ -37,12 +37,10 @@
 
     const waitForAssets = async () => {
         const images = [...document.images];
-        const videos = [...document.querySelectorAll("video")];
         const fontReady = typeof document.fonts !== "undefined" ? document.fonts.ready : Promise.resolve();
 
         await Promise.all([
             ...images.map(waitForAsset),
-            ...videos.map(waitForAsset),
             fontReady,
         ]);
     };
@@ -51,14 +49,6 @@
         console.log("?? MotionHive Booting...");
 
         document.documentElement.style.scrollBehavior = "smooth";
-
-        const videos = [...document.querySelectorAll("video")];
-
-        videos.forEach((video) => {
-            video.setAttribute("playsinline", "");
-            video.setAttribute("preload", "auto");
-            video.muted = true;
-        });
 
         try {
             await waitForAssets();

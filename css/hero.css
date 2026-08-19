@@ -13,12 +13,9 @@
     padding:80px 6%;
     overflow:hidden;
 
-    background:rgba(21,21,28,.55);
-    backdrop-filter:blur(12px);
-    -webkit-backdrop-filter:blur(12px);
-
-    border:1px solid rgba(255,255,255,.08);
-    border-radius:24px;
+    background:transparent;
+    border:0;
+    border-radius:0;
 }
 
 .hero-overlay{
@@ -135,6 +132,8 @@
 .hero-title span{
 
     display:inline-block;
+    opacity:0;
+    transform:translateY(80px);
 
     transition:.4s;
 

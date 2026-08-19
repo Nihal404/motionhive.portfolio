@@ -28,21 +28,10 @@
 
     z-index:1000;
 
-    border-radius:60px;
-
-    background:rgba(21,21,28,.55);
-
-    backdrop-filter:blur(14px);
-
-    -webkit-backdrop-filter:blur(14px);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-
-        0 12px 40px rgba(0,0,0,.35),
-
-        inset 0 0 20px rgba(255,255,255,.02);
+    border-radius:0;
+    background:transparent;
+    border:0;
+    box-shadow:none;
 
     transition:.35s ease;
 
@@ -209,7 +198,7 @@ body.loaded .bottom-nav{
 
         padding:12px 18px;
 
-        border-radius:20px;
+        border-radius:0;
 
     }
 

@@ -20,36 +20,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
     // ==============================
-    // HERO ANIMATION
-    // ==============================
-
-
-    gsap.from(".hero-image",{
-
-        y:8,
-        opacity:0,
-        duration:0.2,
-        ease:"power2.out"
-
-    });
-
-
-
-    gsap.from(".hero-title span",{
-
-        y:10,
-        opacity:0,
-        stagger:0.015,
-        duration:0.16,
-        ease:"power2.out"
-
-    });
-
-
-
-
-
-    // ==============================
     // ABOUT SECTION
     // ==============================
 

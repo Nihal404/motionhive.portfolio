@@ -32,15 +32,9 @@
     </div>
 </div>
 <body>
-    <video 
-id="bg-video"
-autoplay
-muted
-loop
-playsinline
-preload="auto">
-    <source src="bgvideo.mp4" type="video/mp4">
-</video>
+<div id="waves-background" aria-hidden="true">
+    <canvas class="waves-canvas"></canvas>
+</div>
 <div id="loader">
 
     <h1 class="loader-text">
@@ -49,10 +43,9 @@ preload="auto">
 
 </div>
 
-<div id="cursor-light">
-    <span id="cursor-text"></span>
+<div id="swarm-cursor" aria-hidden="true">
+    <canvas class="swarm-cursor-canvas"></canvas>
 </div>
-<div id="cursor-trail"></div>
 
 <div class="blob blob1"></div>
 <div class="blob blob2"></div>
@@ -137,7 +130,7 @@ preload="auto">
 
         <div class="about-block">
 
-            <h3>ABOUT US</h3>
+            <h3 class="shiny-text">ABOUT US</h3>
 
             <p>
                 HI, WE ARE MOTIONHIVES. We are a team of professional video editors with 2 years of experience creating
@@ -153,7 +146,7 @@ preload="auto">
 
         <div class="about-block">
 
-            <h3>SOFTWARE SKILLS</h3>
+            <h3 class="shiny-text">SOFTWARE SKILLS</h3>
 
            <div class="skills-icons">
 
@@ -232,7 +225,12 @@ preload="auto">
 <section id="projects" class="projects-section">
 
     <div class="projects-header">
-        <h2 class="section-title projects-title">Featured <span>Projects</span></h2>
+        <h2 class="section-title projects-title particle-text-heading">
+            <span class="particle-text" data-text="Featured Projects">
+                <span class="particle-text-fallback">Featured Projects</span>
+                <canvas class="particle-text-canvas" aria-hidden="true"></canvas>
+            </span>
+        </h2>
         <p class="projects-subtitle">Creative edits crafted for brands and creators.</p>
     </div>
     <div class="projects-grid">
@@ -314,8 +312,12 @@ preload="auto">
 </footer>
 
 <script src="js/loader.js"></script>
+<script src="js/waves.js"></script>
 <script src="js/hero.js"></script>
-<script src="js/cursor.js"></script>
+<script src="js/split-text.js"></script>
+<script src="js/particle-text.js"></script>
+<script src="js/swarm-cursor.js"></script>
+<script src="js/border-glow.js"></script>
 <script src="js/navigation.js"></script>
 <script src="js/projects.js"></script>
 <script src="js/animations.js"></script>

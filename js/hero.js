@@ -10,22 +10,35 @@ function initHero() {
         return;
     }
 
-    gsap.from(".hero-image", {
-        scale: 0.98,
-        rotate: 2,
-        opacity: 0,
-        duration: 0.2,
-        ease: "power2.out"
-    });
+    const heroImage = document.querySelector(".hero-image");
+
+    if (heroImage) {
+        gsap.fromTo(heroImage, {
+            scale: 0.98,
+            rotate: 2,
+            opacity: 0
+        }, {
+            scale: 1,
+            rotate: 0,
+            opacity: 1,
+            duration: 0.2,
+            ease: "power2.out"
+        });
+    }
 
     const heroTitle = document.querySelector(".hero-title");
     if (heroTitle) {
-        gsap.from(".hero-title span", {
-            y: 12,
-            opacity: 0,
-            stagger: 0.015,
-            duration: 0.16,
-            ease: "power2.out"
+        const titleLetters = heroTitle.querySelectorAll("span");
+
+        gsap.fromTo(titleLetters, {
+            y: 80,
+            opacity: 0
+        }, {
+            y: 0,
+            opacity: 1,
+            stagger: 0.08,
+            duration: 0.7,
+            ease: "power3.out"
         });
     }
 
@@ -56,8 +69,6 @@ function initHero() {
             duration: 1.1,
             ease: "sine.inOut"
         });
-
-        const heroImage = document.querySelector(".hero-image");
 
         if (heroImage) {
 
