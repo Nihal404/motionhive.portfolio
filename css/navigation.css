@@ -1,0 +1,261 @@
+/* ==========================================
+   MotionHive - navigation.css
+   ========================================== */
+
+.bottom-nav{
+
+    position:fixed;
+
+    bottom:30px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:14px 28px;
+
+    width:auto;
+
+    min-width:280px;
+
+    max-width:90%;
+
+    z-index:1000;
+
+    border-radius:60px;
+
+    background:rgba(21,21,28,.55);
+
+    backdrop-filter:blur(14px);
+
+    -webkit-backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    box-shadow:
+
+        0 12px 40px rgba(0,0,0,.35),
+
+        inset 0 0 20px rgba(255,255,255,.02);
+
+    transition:.35s ease;
+
+}
+
+.bottom-nav:hover{
+
+    border-color:rgba(185,131,255,.35);
+
+    box-shadow:
+
+        0 16px 45px rgba(0,0,0,.45),
+
+        0 0 25px rgba(185,131,255,.12);
+
+}
+
+.bottom-nav ul{
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    gap:30px;
+
+    list-style:none;
+
+}
+
+.bottom-nav li{
+
+    position:relative;
+
+}
+
+.bottom-nav a{
+
+    position:relative;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    color:var(--text);
+
+    font-size:15px;
+
+    font-weight:600;
+
+    letter-spacing:.5px;
+
+    transition:.35s ease;
+
+}
+
+.bottom-nav a::after{
+
+    content:"";
+
+    position:absolute;
+
+    left:50%;
+
+    bottom:-10px;
+
+    width:0;
+
+    height:2px;
+
+    background:var(--accent);
+
+    transform:translateX(-50%);
+
+    transition:.35s ease;
+
+}
+
+.bottom-nav a:hover{
+
+    color:var(--accent);
+
+}
+
+.bottom-nav a:hover::after{
+
+    width:100%;
+
+}
+
+.bottom-nav a.active,
+.bottom-nav a.active-link{
+
+    color:var(--accent);
+
+}
+
+.bottom-nav a.active::after,
+.bottom-nav a.active-link::after{
+
+    width:100%;
+
+}
+
+.bottom-nav a.active::before,
+.bottom-nav a.active-link::before{
+
+    content:"";
+
+    position:absolute;
+
+    bottom:-18px;
+
+    left:50%;
+
+    transform:translateX(-50%);
+
+    width:8px;
+
+    height:8px;
+
+    border-radius:50%;
+
+    background:var(--accent2);
+
+    box-shadow:
+
+        0 0 12px var(--accent2);
+
+}
+
+/* Hide on loader */
+
+#loader ~ .bottom-nav{
+
+    opacity:0;
+
+    pointer-events:none;
+
+}
+
+body.loaded .bottom-nav{
+
+    opacity:1;
+
+    pointer-events:auto;
+
+}
+
+/* Mobile */
+
+@media (max-width:768px){
+
+    .bottom-nav{
+
+        bottom:20px;
+
+        width:92%;
+
+        min-width:unset;
+
+        padding:12px 18px;
+
+        border-radius:20px;
+
+    }
+
+    .bottom-nav ul{
+
+        width:100%;
+
+        justify-content:space-between;
+
+        gap:12px;
+
+    }
+
+    .bottom-nav a{
+
+        font-size:13px;
+
+    }
+
+    .bottom-nav a.active::before,
+    .bottom-nav a.active-link::before{
+
+        bottom:-14px;
+
+        width:6px;
+
+        height:6px;
+
+    }
+
+}
+
+/* Small Phones */
+
+@media (max-width:480px){
+
+    .bottom-nav{
+
+        padding:10px 14px;
+
+    }
+
+    .bottom-nav a{
+
+        font-size:12px;
+
+    }
+
+}

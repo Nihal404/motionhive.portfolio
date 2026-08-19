@@ -6,7 +6,14 @@
 
 <title>Motion Hives</title>
 
-<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/cursor.css">
+<link rel="stylesheet" href="css/navigation.css">
+<link rel="stylesheet" href="css/hero.css">
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/projects.css">
+<link rel="stylesheet" href="css/contact.css">
+<link rel="stylesheet" href="css/responsive.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
@@ -25,20 +32,27 @@
     </div>
 </div>
 <body>
-    <video autoplay muted loop playsinline id="bg-video">
+    <video 
+id="bg-video"
+autoplay
+muted
+loop
+playsinline
+preload="auto">
     <source src="bgvideo.mp4" type="video/mp4">
 </video>
+<div id="loader">
 
-<div id="bg-overlay"></div>
-    <div id="loader">
     <h1 class="loader-text">
         MOTIONHIVES
-    
+    </h1>
 
 </div>
 
-<div id="cursor-light"></div>
-    </div>
+<div id="cursor-light">
+    <span id="cursor-text"></span>
+</div>
+<div id="cursor-trail"></div>
 
 <div class="blob blob1"></div>
 <div class="blob blob2"></div>
@@ -98,9 +112,22 @@
             <h2>MOTIONHIVES</h2>
         </div>
 
-        <div class="profile-card">
-            <img src="image1.png" alt="Nihal">
-        </div>
+      <div class="profile-card">
+
+    <div class="spotlight"></div>
+
+    <img src="image1.png" alt="MotionHive Logo">
+
+    <div class="particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+
+</div>
 
     </div>
 
@@ -210,7 +237,7 @@
     </div>
     <div class="projects-grid">
     <div class="card card1">
-        <video src="https://res.cloudinary.com/b8wxau4l/video/upload/v1783929806/travel_reel_fnysnj.mp4" muted loop playsinline preload="metadata"></video>
+        <video src="https://res.cloudinary.com/b8wxau4l/video/upload/v1783929806/travel_reel_fnysnj.mp4" muted loop playsinline preload="metadata" poster="image2.png"></video>
         <span class="play-button"><i class="fa-solid fa-play"></i></span>
         <div class="card-content">
             <h3>Cinematic Travel Reel</h3>
@@ -218,10 +245,10 @@
             <span>30 sec</span>
         </div>
     </div>
-    <div class="card card2"><video src="bgvideo.mp4" muted loop playsinline preload="metadata"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Brand Launch Cut</h3><p>Brand &bull; After Effects</p><span>45 sec</span></div></div>
-    <div class="card card3"><video src="bgvideo.mp4" muted loop playsinline preload="metadata"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Creator Short</h3><p>Reels &bull; CapCut</p><span>18 sec</span></div></div>
-    <div class="card card4"><video src="bgvideo.mp4" muted loop playsinline preload="metadata"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Motion Identity</h3><p>Motion &bull; After Effects</p><span>60 sec</span></div></div>
-    <div class="card card5"><video src="bgvideo.mp4" muted loop playsinline preload="metadata"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Event Recap</h3><p>Events &bull; DaVinci Resolve</p><span>35 sec</span></div></div>
+    <div class="card card2"><video src="bgvideo.mp4" muted loop playsinline preload="metadata" poster="image2.png"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Brand Launch Cut</h3><p>Brand &bull; After Effects</p><span>45 sec</span></div></div>
+    <div class="card card3"><video src="bgvideo.mp4" muted loop playsinline preload="metadata" poster="image2.png"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Creator Short</h3><p>Reels &bull; CapCut</p><span>18 sec</span></div></div>
+    <div class="card card4"><video src="bgvideo.mp4" muted loop playsinline preload="metadata" poster="image2.png"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Motion Identity</h3><p>Motion &bull; After Effects</p><span>60 sec</span></div></div>
+    <div class="card card5"><video src="bgvideo.mp4" muted loop playsinline preload="metadata" poster="image2.png"></video><span class="play-button"><i class="fa-solid fa-play"></i></span><div class="card-content"><h3>Event Recap</h3><p>Events &bull; DaVinci Resolve</p><span>35 sec</span></div></div>
     </div>
 
 </section>
@@ -286,7 +313,13 @@
     <p>@MOTIONHIVE</p>
 </footer>
 
-<script src="script.js"></script>
+<script src="js/loader.js"></script>
+<script src="js/hero.js"></script>
+<script src="js/cursor.js"></script>
+<script src="js/navigation.js"></script>
+<script src="js/projects.js"></script>
+<script src="js/animations.js"></script>
+<script src="js/main.js"></script>
 
 </body>
 </html>

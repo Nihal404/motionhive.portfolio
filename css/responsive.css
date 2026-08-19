@@ -1,0 +1,179 @@
+/* ==========================================
+   RESPONSIVE.CSS
+   MotionHive Portfolio
+========================================== */
+
+/* ---------- Large Laptop ---------- */
+
+@media (max-width:1200px){
+
+    .about-container{
+        gap:50px;
+    }
+
+    .projects-grid{
+        gap:18px;
+    }
+
+}
+
+/* ---------- Tablet ---------- */
+
+@media (max-width:992px){
+
+    section{
+        padding:80px 6%;
+    }
+
+    .about-container,
+    .thankyou-section{
+        grid-template-columns:1fr;
+    }
+
+    .about-left,
+    .thank-left,
+    .thank-right{
+        text-align:center;
+        align-items:center;
+    }
+
+    .projects-grid{
+        grid-template-columns:1fr;
+        grid-auto-rows:250px;
+    }
+
+    .card1,
+    .card2,
+    .card3,
+    .card4,
+    .card5{
+        grid-column:auto;
+        grid-row:auto;
+    }
+
+    .info-grid{
+        grid-template-columns:1fr;
+    }
+
+}
+
+/* ---------- Mobile ---------- */
+
+@media (max-width:768px){
+
+    html{
+        font-size:15px;
+    }
+
+    section{
+        padding:70px 5%;
+    }
+
+    .hero-title{
+        font-size:clamp(2.8rem,12vw,4.5rem);
+        letter-spacing:3px;
+    }
+
+    .hero-content p{
+        letter-spacing:2px;
+        font-size:14px;
+    }
+
+    .hero-image{
+        width:180px;
+        height:180px;
+    }
+
+    .projects-grid{
+        grid-auto-rows:220px;
+    }
+
+    .bottom-nav{
+        width:92%;
+        padding:12px 18px;
+    }
+
+    .bottom-nav ul{
+        gap:15px;
+    }
+
+}
+
+/* ---------- Small Mobile ---------- */
+
+@media (max-width:480px){
+
+    section{
+        padding:60px 20px;
+    }
+
+    .hero-title{
+        font-size:2.3rem;
+        letter-spacing:2px;
+    }
+
+    .hero-image{
+        width:150px;
+        height:150px;
+    }
+
+    .profile-circle{
+        width:140px;
+        height:140px;
+    }
+
+    .projects-grid{
+        grid-auto-rows:200px;
+    }
+
+    .card h3{
+        font-size:22px;
+    }
+
+    .play-button{
+        width:50px;
+        height:50px;
+    }
+
+    .thank-right h1{
+        font-size:4rem;
+    }
+
+    .bottom-nav{
+        bottom:15px;
+        border-radius:18px;
+    }
+
+}
+
+/* ---------- Landscape Phones ---------- */
+
+@media (max-height:600px) and (orientation:landscape){
+
+    #hero{
+        min-height:auto;
+        padding:60px 6%;
+    }
+
+    .hero-image{
+        width:140px;
+        height:140px;
+    }
+
+}
+
+/* ---------- Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation:none !important;
+        transition:none !important;
+        scroll-behavior:auto !important;
+
+    }
+
+}
