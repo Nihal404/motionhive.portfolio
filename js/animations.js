@@ -132,7 +132,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
         y:16,
-        opacity:0,
         stagger:.04,
         duration:0.25,
         ease:"power3.out"
@@ -167,7 +166,6 @@ document.addEventListener("DOMContentLoaded",()=>{
 
 
         y:36,
-        opacity:0,
         scale:.98,
         stagger:.04,
         duration:0.35,
@@ -283,7 +281,9 @@ document.addEventListener("DOMContentLoaded",()=>{
     window.addEventListener("load",()=>{
 
 
-        ScrollTrigger.refresh();
+        if (typeof ScrollTrigger !== "undefined") {
+            ScrollTrigger.refresh();
+        }
 
 
     });

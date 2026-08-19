@@ -90,6 +90,7 @@
     display:block;
     min-height:220px;
     opacity:1;
+    visibility:visible;
 
     border-radius:22px;
 

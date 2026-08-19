@@ -6,6 +6,10 @@ function initHero() {
 
     console.log("🚀 Hero Started");
 
+    if (typeof gsap === "undefined") {
+        return;
+    }
+
     gsap.from(".hero-image", {
         scale: 0.98,
         rotate: 2,
@@ -14,25 +18,34 @@ function initHero() {
         ease: "power2.out"
     });
 
-    gsap.from(".hero-title span", {
-        y: 12,
-        opacity: 0,
-        stagger: 0.015,
-        duration: 0.16,
-        ease: "power2.out"
-    });
+    const heroTitle = document.querySelector(".hero-title");
+    if (heroTitle) {
+        gsap.from(".hero-title span", {
+            y: 12,
+            opacity: 0,
+            stagger: 0.015,
+            duration: 0.16,
+            ease: "power2.out"
+        });
+    }
 
-    gsap.from(".hero-content p", {
-        y: 8,
-        opacity: 0,
-        duration: 0.16
-    });
+    const heroParagraph = document.querySelector(".hero-content p");
+    if (heroParagraph) {
+        gsap.from(heroParagraph, {
+            y: 8,
+            opacity: 0,
+            duration: 0.16
+        });
+    }
 
-    gsap.from(".hero-buttons", {
-        y: 8,
-        opacity: 0,
-        duration: 0.16
-    });
+    const heroButtons = document.querySelector(".hero-buttons");
+    if (heroButtons) {
+        gsap.from(heroButtons, {
+            y: 8,
+            opacity: 0,
+            duration: 0.16
+        });
+    }
 
     if (window.innerWidth > 768) {
 
